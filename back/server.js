@@ -72,7 +72,7 @@ const role = totalUsers === 0 ? 'admin' : 'user';
 
     const result = await pool.query(
       'INSERT INTO users (firstname, lastname, mail, role, mdp) VALUES ($1, $2, $3, $4, $5) RETURNING user_id, firstname, lastname, mail, role',
-      [firstname, lastname, email, hashedPassword, role]
+      [firstname, lastname, email, role,hashedPassword]
     );
     res.status(201).json({
       success: true,

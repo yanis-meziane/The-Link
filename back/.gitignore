@@ -25,3 +25,7 @@ yarn-error.log*
 # .env 
 
 .env
+
+# Clé publique 
+
+/thelink.pem
