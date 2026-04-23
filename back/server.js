@@ -66,13 +66,13 @@ app.post('/api/register', async (req, res) => {
 
     const userCount = await pool.query('SELECT COUNT(*) FROM users');
     const totalUsers = parseInt(userCount.rows[0].count);
-const role = totalUsers === 0 ? 'admin' : 'user';
+    const role = totalUsers === 0 ? 'admin' : 'user';
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const result = await pool.query(
       'INSERT INTO users (firstname, lastname, mail, role, mdp) VALUES ($1, $2, $3, $4, $5) RETURNING user_id, firstname, lastname, mail, role',
-      [firstname, lastname, email, role,hashedPassword]
+      [firstname, lastname, email, role, hashedPassword]
     );
     res.status(201).json({
       success: true,
@@ -87,12 +87,12 @@ const role = totalUsers === 0 ? 'admin' : 'user';
 });
 
 app.post('/api/login', async (req, res) => {
-  const { mail, mdp } = req.body;
+  const { email, password } = req.body;
 
   try {
     const result = await pool.query(
       'SELECT user_id, firstname, lastname, mail, role, mdp FROM users WHERE mail = $1',
-      [mail]
+      [email]
     );
 
     if (result.rows.length === 0) {
@@ -100,7 +100,7 @@ app.post('/api/login', async (req, res) => {
     }
 
     const user = result.rows[0];
-    const isPasswordValid = await bcrypt.compare(mdp, user.mdp);
+    const isPasswordValid = await bcrypt.compare(password, user.mdp);
 
     if (!isPasswordValid) {
       return res.status(401).json({ success: false, message: 'Email ou mot de passe incorrect' });

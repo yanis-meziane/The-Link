@@ -46,7 +46,7 @@ export default function Login(){
                     if (data.type === "admin") {
                         navigate('/admin');
                     } else {
-                        navigate('/main');
+                        navigate('/user');
                     }
                 }, 500);
 
@@ -78,7 +78,7 @@ export default function Login(){
                  {error && <p style={{ color: 'red' }}>{error}</p>}
                 {success && <p style={{ color: 'green' }}>{success}</p>}
 
-                
+
                 <div id='noAccount'>
                      No account ?
                     <Link to="/register">

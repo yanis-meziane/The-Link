@@ -5,6 +5,7 @@ import Register from './Register/Register';
 import Main from './Main/Main';
 import User from './User/User';
 import Admin from './Admin/Admin';
+import ProtectedRoute from './ProtectedRoutes';
 
 function App() {
   return (
@@ -16,8 +17,17 @@ function App() {
         
         {/* Ne pas oublier de faire une protection de route pour l'affichage en fonction de si tu es un user ou un admin */}
 
-        <Route path='/user' element={<User />}></Route>
-        <Route path='/admin' element={<Admin />}></Route>
+        <Route path='/user' element={
+          <ProtectedRoute requiredRole="user">
+            <User />
+          </ProtectedRoute>
+        } />
+
+          <Route path='/admin' element={
+          <ProtectedRoute requiredRole="admin">
+            <Admin />
+          </ProtectedRoute>
+        } />
 
       </Routes>
     </BrowserRouter>
