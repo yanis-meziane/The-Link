@@ -58,7 +58,7 @@ app.post('/api/register', async (req, res) => {
   const { firstname, lastname, email, password } = req.body;
 
   try {
-    const checkUser = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+    const checkUser = await pool.query('SELECT * FROM users WHERE mail = $1', [email]);
 
     if (checkUser.rows.length > 0) {
       return res.status(400).json({ success: false, message: 'Cet email est déjà utilisé' });
@@ -71,7 +71,7 @@ const role = totalUsers === 0 ? 'admin' : 'user';
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const result = await pool.query(
-      'INSERT INTO users (firstname, lastname, email, password, role) VALUES ($1, $2, $3, $4, $5) RETURNING user_id, firstname, lastname, email, role',
+      'INSERT INTO users (firstname, lastname, mail, role, mdp) VALUES ($1, $2, $3, $4, $5) RETURNING user_id, firstname, lastname, mail, role',
       [firstname, lastname, email, hashedPassword, role]
     );
     res.status(201).json({
@@ -87,12 +87,12 @@ const role = totalUsers === 0 ? 'admin' : 'user';
 });
 
 app.post('/api/login', async (req, res) => {
-  const { email, password } = req.body;
+  const { mail, mdp } = req.body;
 
   try {
     const result = await pool.query(
-      'SELECT user_id, firstname, lastname, email, password, role FROM users WHERE email = $1',
-      [email]
+      'SELECT user_id, firstname, lastname, mail, role, mdp FROM users WHERE mail = $1',
+      [mail]
     );
 
     if (result.rows.length === 0) {
@@ -100,7 +100,7 @@ app.post('/api/login', async (req, res) => {
     }
 
     const user = result.rows[0];
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await bcrypt.compare(mdp, user.mdp);
 
     if (!isPasswordValid) {
       return res.status(401).json({ success: false, message: 'Email ou mot de passe incorrect' });
