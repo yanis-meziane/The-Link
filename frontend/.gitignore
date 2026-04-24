@@ -25,3 +25,7 @@ yarn-error.log*
 # backend 
 
 ./backend
+
+# CI-CD 
+
+../.github
