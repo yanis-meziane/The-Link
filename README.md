@@ -50,4 +50,4 @@ docker run -p 3000:3000 thelink
 
 ## IV - Les difficultés rencontrées
 
-Les principales difficultées rencontrées étaient la création des tests et la mise en place de la CI-CD. Pour y remédier, je me suis aidé de la documentation en ligne afin de pouvoir les mettre en place. En ce qui concerne la CI-CD, les seuls points auxquels j'ai rencontré de la difficulté c'est la créations des tests et la mise en place de Kubernetes.
+Les principales difficultés rencontrées ont été la création des tests unitaires et la mise en place de la pipeline CI/CD. Pour les résoudre, je me suis appuyé sur la documentation officielle. Plus spécifiquement, la configuration des tests et l'intégration de Kubernetes ont été les points les plus complexes à mettre en œuvre.
