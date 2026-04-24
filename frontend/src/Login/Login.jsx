@@ -60,7 +60,7 @@ export default function Login(){
         }
     };
     return(
-        <div>
+        <div id='registerID'>
             <form onSubmit={handleSubmit} class="form">
                 <p class="form-title">Sign in to your account</p>
                 <div class="input-container">

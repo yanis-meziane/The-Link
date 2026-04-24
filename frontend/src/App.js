@@ -6,6 +6,7 @@ import Main from './Main/Main';
 import User from './User/User';
 import Admin from './Admin/Admin';
 import ProtectedRoute from './ProtectedRoutes';
+import Game from './Game/Game';
 
 function App() {
   return (
@@ -17,11 +18,17 @@ function App() {
         
         {/* Ne pas oublier de faire une protection de route pour l'affichage en fonction de si tu es un user ou un admin */}
 
-        <Route path='/user' element={
-          <ProtectedRoute requiredRole="user">
-            <User />
-          </ProtectedRoute>
-        } />
+      <Route path='/user' element={
+    <ProtectedRoute requiredRole="user">
+        <User />
+    </ProtectedRoute>
+} />
+
+<Route path='/game' element={
+    <ProtectedRoute requiredRole="user">
+        <Game />
+    </ProtectedRoute>
+} />
 
           <Route path='/admin' element={
           <ProtectedRoute requiredRole="admin">

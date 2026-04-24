@@ -119,6 +119,28 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
+// Route pour les joueurs
+
+app.post('/api/cards', async (req, res) => {
+    const { players } = req.body; // ["Astrid", "Jean"]
+
+    if (!players || players.length === 0) {
+        return res.status(400).json({ success: false, message: 'Aucun joueur fourni' });
+    }
+
+    try {
+        const result = await pool.query(
+            'SELECT sentences, people FROM cards WHERE people = ANY($1)',
+            [players]
+        );
+
+        res.json({ success: true, cards: result.rows });
+    } catch (error) {
+        console.error('Erreur récupération cartes:', error);
+        res.status(500).json({ success: false, message: 'Erreur serveur' });
+    }
+});
+
 app.listen(PORT, () => {
   console.log(`Serveur démarré sur le port ${PORT}`);
 });
