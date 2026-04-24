@@ -71,6 +71,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./frontend
+          file: ./frontend/Dockerfile.front
           push: true
           tags: ${{ env.IMAGE_FRONTEND }}:latest,${{ env.IMAGE_FRONTEND }}:${{ github.sha }}
 
@@ -78,6 +79,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./back
+          file: ./back/Dockerfile
           push: true
           tags: ${{ env.IMAGE_BACKEND }}:latest,${{ env.IMAGE_BACKEND }}:${{ github.sha }}
 
