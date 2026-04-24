@@ -100,8 +100,8 @@ jobs:
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.VM_SSH_KEY }}
           script: |
-            echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            docker pull ${{ env.IMAGE_FRONTEND }}:latest
-            docker pull ${{ env.IMAGE_BACKEND }}:latest
-            cd /opt/thelink
+  echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+  docker pull ghcr.io/${{ github.repository_owner }}/thelink-frontend:latest
+  docker pull ghcr.io/${{ github.repository_owner }}/thelink-backend:latest
+  cd ~
             
