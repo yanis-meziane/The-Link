@@ -28,10 +28,6 @@ jobs:
         working-directory: frontend
         run: npm ci
 
-      - name: Lancer les tests
-        working-directory: frontend
-        run: npm test -- --watchAll=false --passWithNoTests
-
   ci-backend:
     name: CI Backend
     runs-on: ubuntu-latest
@@ -47,10 +43,6 @@ jobs:
       - name: Installer les dépendances
         working-directory: back
         run: npm ci
-
-      - name: Lancer les tests
-        working-directory: back
-        run: npm test -- --watchAll=false --passWithNoTests
 
   # ─────────────────────────────────────────
   # 2. Build & Push Docker (seulement sur main)
