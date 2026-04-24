@@ -6,6 +6,23 @@ Le projet *The Link* est un jeu de soirée qui se joue entre 2 et 4 joueurs. Le 
 
 ## II - Explication de la pipeline 
 
+La pipeline CI/CD se déclenche automatiquement à chaque push sur la branche `main`.
+Elle se compose de 3 étapes qui s'exécutent dans l'ordre :
+
+**1. CI — Install & Test**
+GitHub crée une machine virtuelle Ubuntu vierge, installe Node.js et toutes les
+dépendances du frontend et du backend avec `npm ci`. Il lance ensuite les tests
+pour vérifier que rien n'est cassé. Si les tests échouent, le pipeline s'arrête.
+
+**2. Docker — Build & Push**
+Si les tests passent, GitHub construit les images Docker du frontend et du backend
+à partir des Dockerfiles.
+
+**3. Deploy — Déploiement sur la VM**
+GitHub se connecte à la VM Azure via SSH grâce à une clé privée stockée dans les
+secrets GitHub. Il télécharge les nouvelles images Docker, arrête les anciens
+conteneurs et redémarre l'application avec les nouvelles versions.
+
 
 ## III - Le déploiement
 
@@ -33,4 +50,4 @@ docker run -p 3000:3000 thelink
 
 ## IV - Les difficultés rencontrées
 
-Les principales difficultées rencontrées étaient la création des tests et la mise en place de la CI-CD. Pour y remédier, je me suis aidé de la documentation en ligne afin de pouvoir les mettre en place. 
+Les principales difficultées rencontrées étaient la création des tests et la mise en place de la CI-CD. Pour y remédier, je me suis aidé de la documentation en ligne afin de pouvoir les mettre en place. En ce qui concerne la CI-CD, les seuls points auxquels j'ai rencontré de la difficulté c'est la créations des tests et la mise en place de Kubernetes.
